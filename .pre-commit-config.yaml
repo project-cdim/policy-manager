@@ -1,0 +1,23 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+# ・sample
+# repos:
+# -   repo: https://github.com/pre-commit/pre-commit-hooks
+#     rev: v3.2.0
+#     hooks:
+#     -   id: trailing-whitespace
+#     -   id: end-of-file-fixer
+#     -   id: check-yaml
+#     -   id: check-added-large-files
+
+repos:
+-   repo: local
+    hooks:
+    -   id: pytest
+        name: pytest
+        # NOTE:converageが100以下の場合はpytestが失敗する設定(--cov-fail-under=100)。本格開発が始まったら有効化する
+        # entry: .venv/Scripts/python.exe -m pytest tests -v --cov --cov-report xml --capture=no --cov-report=term-missing --capture=no --cov-branch -vv --tb=line -s --cov-fail-under=100
+        entry: .venv/bin/python3 -m pytest tests -v --cov --cov-report xml --capture=no --cov-report=term-missing --capture=no --cov-branch -vv --tb=line -s
+        language: system
+        pass_filenames: false
+        always_run: true

@@ -1,0 +1,71 @@
+[project]
+name = "policymanager"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "NEC corporation."},
+]
+dependencies = [
+    "jsonschema<5.0.0,>=4.25.1",
+    "uvicorn<1.0.0,>=0.40.0",
+    "fastapi>=0.127.0",
+    "psycopg2-binary<3.0.0,>=2.9.11",
+    "python-multipart>=0.0.21",
+    "requests<3.0.0,>=2.32.5",
+    "pyyaml<7.0.0,>=6.0.2",
+]
+requires-python = "<4.0,>=3.14.2"
+readme = "README.md"
+license = {text = "LICENSE"}
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+
+[project.scripts]
+policymanager = "policymanager.cli:main"
+policymanager-server = "policymanager.restapi:main"
+
+
+[tool.isort]
+profile = "black"
+line_length = 120
+
+[tool.black]
+line-length = 120
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-v --cov --cov-branch tests --cov-report xml --capture=no --cov-report=term-missing --tb=line --cov-fail-under=100"
+filterwarnings = "ignore::DeprecationWarning"
+disable_test_id_escaping_and_forfeit_all_rights_to_community_support = "True"
+
+[tool.coverage.run]
+omit = [
+    "*/tests/*",
+    "*/__init__.py",
+]
+
+[tool.pdm]
+distribution = true
+[tool.pdm.build]
+includes = []
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "flake8",
+    "pytest-mock",
+    "autopep8",
+    "isort",
+    "pre-commit",
+    "pylint",
+    "black",
+    "pytest-httpserver",
+    "radon",
+    "httpx",
+    "pytest-docker>=3.2.2",
+]
